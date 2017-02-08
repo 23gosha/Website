@@ -1,0 +1,24 @@
+<!--A LOT OF CODE DELETED AFTER PREVIOUS VERSION-->
+
+
+{% extends 'music/base.html' %} <!--took base.html and put it here-->
+{% block title %}Album Details{% endblock %}
+
+{% block body %}
+    <img src="{{ album.album_logo }}">
+
+    <h1>{{ album.album_title }}<h1>
+    <h3>{{ album.artist }}</h3>
+
+    {% if error_message %}
+        <p><strong>{{ error_message }}</strong></p>
+    {% endif %}
+
+    {% for song in album.song_set.all %}
+        {{ song.song_title }}
+        {% if song.is_favorite %}
+            <img src="https://a248.e.akamai.net/media.zulily.com/js/raty/img/star-on.png"/>
+        {% endif %}
+        <br>
+    {% endfor %}
+{% endblock %}

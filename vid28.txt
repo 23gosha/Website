@@ -1,0 +1,148 @@
+python manage.py runserver
+django-admin startproject website
+python manage.py makemigrations music
+python manage.py migrate
+
+python manage.py createsuperuser
+
+
+
+
+
+
+python manage.py shell
+In [1]: from music.models import Album, Song
+In [2]: Album.objects.all()
+Out[2]: <QuerySet []>
+
+In [3]: a = Album(artist='Taylor Swift', album_title='Red', genre='Country', alb
+   ...: um_logo='http://www.logoopenstock.com/media/users/694/64850/raw/5d4d343a
+   ...: 1eed6959d4322bc4ebef8f68-kiss-rock-band-vector-logo.jpg')
+
+In [4]: a.save()
+
+In [5]: a.artist
+Out[5]: 'Taylor Swift'
+
+In [6]: a.id
+Out[6]: 1
+
+In [7]: a.pk
+Out[7]: 1
+
+In [8]: b = Album()
+
+In [9]: b.artist = 'Myth'
+
+In [10]: b.album_title = 'High School'
+
+In [11]: b.genre = 'Punk'
+
+In [12]: b.album_logo = 'http://machoarts.com/wp-content/uploads/2012/08/Julius%
+    ...: 2BMyth%2BLogo.jpg'
+
+In [13]: b.save()
+
+In [14]: a.artist
+Out[14]: 'Taylor Swift'
+
+In [16]: Album.objects.all()
+Out[16]: <QuerySet [<Album: Album object>, <Album: Album object>]>
+
+
+CHANGES INTO models.py, RESTART THE SHELL
+
+
+In [1]: from music.models import Album, Song
+
+In [2]: Album.objects.all()
+Out[2]: <QuerySet [<Album: Red - Taylor Swift>, <Album: High School - Myth>]>
+
+In [3]: Album.objects.filter(id=1)
+Out[3]: <QuerySet [<Album: Red - Taylor Swift>]>
+
+In [4]: Album.objects.filter(artist__startswith='Taylor')
+Out[4]: <QuerySet [<Album: Red - Taylor Swift>]>
+
+
+
+
+
+In [1]: from music.models import Album, Song
+
+In [2]: album1 = Album.objects.get(pk=1)
+
+In [3]: album1.artist
+Out[3]: 'Taylor Swift'
+
+In [4]: song = Song()
+
+In [5]: song.album = album1
+
+In [6]: song.file_type = 'mp3'
+
+In [7]: song.song_title = 'I hate my boyfriens'
+
+In [8]: song.save()
+
+In [9]: song.song_title = 'I love my boyfriend'
+
+In [10]: song.save()
+
+In [11]: album1.song_set.all()
+Out[11]: <QuerySet [<Song: I love my boyfriend>]>
+
+In [12]: album1.song_set.create(song_title='I love bacon', file_type='mp3')
+Out[12]: <Song: I love bacon>
+
+In [13]: album1.song_set.create(song_title='Bucky is Lucky', file_type='mp3')
+Out[13]: <Song: Bucky is Lucky>
+
+In [14]: album1.song_set.create(song_title='Ice Cream', file_type='mp3')
+Out[14]: <Song: Ice Cream>
+
+In [15]: song = album1.song_set.create(song_title='Ice Cream', file_type='mp3')
+
+In [16]: song.song_title
+Out[16]: 'Ice Cream'
+
+In [17]: album1.song_set.all()
+Out[17]: <QuerySet [<Song: I love my boyfriend>, <Song: I love bacon>, <Song: Bucky is Lucky>, <Song: Ice Cream>, <Song: Ice Cream>]>
+
+In [18]: album1.song_set.count()
+Out[18]: 5
+
+
+
+REGULAR EXPRESSIONS
+
+
+abc…	Letters
+123…	Digits
+\d	Any Digit
+\D	Any Non-digit character
+.	Any Character
+\.	Period
+[abc]	Only a, b, or c
+[^abc]	Not a, b, nor c
+[a-z]	Characters a to z
+[0-9]	Numbers 0 to 9
+\w	Any Alphanumeric character
+\W	Any Non-alphanumeric character
+{m}	m Repetitions
+{m,n}	m to n Repetitions
+*	Zero or more repetitions
++	One or more repetitions
+?	Optional character
+\s	Any Whitespace
+\S	Any Non-whitespace character
+^…$	Starts and ends
+(…)	Capture Group
+(a(bc))	Capture Sub-group
+(.*)	Capture all
+(abc|def)	Matches abc or def
+
+
+
+PYCHARM - good editor
+
