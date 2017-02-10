@@ -6,7 +6,9 @@ app_name = 'music'
 
 urlpatterns = [
     # /music/
-    url(r'^$', views.IndexView.as_view(), name='index'), # ^ = beginning, $ = end
+    url(r'^$', views.IndexView.as_view(), name='index'), # ^ = beginning, $ = end; if we have a class in views.py we use .as_view(), otherwise name of the function
     # /music/712/
     url(r'^(?P<pk>[0-9]+)/$', views.DetailView.as_view(), name='detail'), # [0-9] = from 0 to 9, + = several digits. 712 is gonna hit
+    # /music/album/add/
+    url(r'album/add/$', views.AlbumCreate.as_view(), name='album-add'),
 ]
