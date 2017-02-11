@@ -3,7 +3,22 @@
 {% block body %}
     <ul>
         {% for album in object_list %} <!--when use ListView object_list (list of all objects is returned-->
-            <li><a href="{% url 'music:detail' album.id %}">{{ album.album_title }}</li>
+            <li>
+                <a href="{% url 'music:detail' album.id %} " style="font-size:1.2em;">{{ album.album_title }}</a>
+                <!--<a href="{% url 'music:album-update' album.id %}" >Edit</a>-->
+
+                <form method="post" action="{% url 'music:album-update' album.id %}"> <!--problem: clears the fields-->
+                    {% csrf_token %}
+                    <input type="submit" value="Edit">
+                </form>
+
+                <form method="post" action="{% url 'music:album-delete' album.id %}">
+                    {% csrf_token %}
+                    <input type="submit" value="Delete">
+                </form>
+                <!--<a href="{% url 'music:album-delete' album.id %}">Delete</a> need a form to delete -->
+
+            </li>
         {% endfor %}
     </ul>
 {% endblock %}
